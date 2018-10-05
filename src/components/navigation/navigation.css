@@ -1,0 +1,28 @@
+.navList {
+  background-color: #000000;
+  margin: 0;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+
+.navItem {
+  color: #FFFFFF;
+  list-style: none;
+  padding: 1em;
+}
+
+.navLink {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.navItem a:hover {
+  color: #FF9500;
+}
+
+.activeNavItem {
+  color: #FF9500;
+  padding-bottom: 12px;
+  border-bottom: 4px solid #FF9500;
+}
