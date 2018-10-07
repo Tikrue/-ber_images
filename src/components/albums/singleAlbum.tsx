@@ -6,6 +6,7 @@ import { observer } from 'mobx-react'
 import { IAlbum, Image } from '../../utils/interfaces'
 import store from '../../store/store'
 import { routes } from '../../utils/constants'
+import '../images/images.css'
 
 @observer
 class SingleAlbum extends React.Component<RouteComponentProps<any>> {
@@ -25,28 +26,23 @@ class SingleAlbum extends React.Component<RouteComponentProps<any>> {
   
     return (
       <div>
-        {
-          !store.isLoading &&
-          <div className="albumWrapper">
-            <h2>
-              {album.title}
-            </h2>
-            {
-              albumImages.map(image => 
-                <Link
-                to={routes.images + '/' + image.id}
-                key={image.id}
-              >
-                <img 
-                  className="imageCard" 
-                  src={image.thumbnailUrl}
-                  alt={image.title} 
-                />
-              </Link>
-              )
-            }
-          </div>
-        }  
+        <h1>{album.title}</h1>
+        <div className="imageListWrapper">
+          {
+            albumImages.map(image => 
+              <Link
+              to={routes.images + '/' + image.id}
+              key={image.id}
+            >
+              <img 
+                className="imageCard" 
+                src={image.thumbnailUrl}
+                alt={image.title} 
+              />
+            </Link>
+            )
+          }
+        </div>  
       </div>
     )
   }
