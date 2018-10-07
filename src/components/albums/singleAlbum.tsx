@@ -1,29 +1,52 @@
 import * as React from 'react'
 import { RouteComponentProps } from "react-router"
+import { Link } from 'react-router-dom'
+import { observer } from 'mobx-react'
 
-// import ImageList from '../images/imageList'
-import { IAlbum } from '../../utils/interfaces'
+import { IAlbum, Image } from '../../utils/interfaces'
+import store from '../../store/store'
+import { routes } from '../../utils/constants'
 
-interface IProps {
-  albums : IAlbum[]
-}
-
-class SingleAlbum extends React.Component<RouteComponentProps<any> & IProps> {
+@observer
+class SingleAlbum extends React.Component<RouteComponentProps<any>> {
   componentDidMount() {
-    // this.props.doLoadImagesForAlbum(this.props.match.params.id)
+    store.doLoadImagesPerAlbum(this.props.match.params.id)
+  }
+
+  filterImages = (images : Image[], albumId : string) => {
+    return images.filter(image => image.albumId.toString() === albumId)
   }
 
   render() {
-    const {match, albums} = this.props
-    const album : IAlbum = 
-      albums.find(exactAlbum  => exactAlbum.id.toString() === match.params.id) || {} as IAlbum
-
+    const { match } = this.props
+    const albumId = match.params.id
+    const albumImages = this.filterImages(store.images, match.params.id)
+    const album : IAlbum = store.getSingleAlbum(albumId)
+  
     return (
       <div>
-        <h2>
-          {album.title}
-        </h2>
-        {/* <ImageList images={}/>*/}
+        {
+          !store.isLoading &&
+          <div className="albumWrapper">
+            <h2>
+              {album.title}
+            </h2>
+            {
+              albumImages.map(image => 
+                <Link
+                to={routes.images + '/' + image.id}
+                key={image.id}
+              >
+                <img 
+                  className="imageCard" 
+                  src={image.thumbnailUrl}
+                  alt={image.title} 
+                />
+              </Link>
+              )
+            }
+          </div>
+        }  
       </div>
     )
   }

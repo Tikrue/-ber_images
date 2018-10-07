@@ -4,25 +4,34 @@ import { Image, IAlbum } from './interfaces'
 
 const baseURL = 'https://jsonplaceholder.typicode.com'
 
-const getImages = (pageNum : number, limit : number) : Promise<Image[]> => {
-  return axios.get(`${baseURL}/photos?_page=${pageNum}&_limit=${limit}`)
-  .then(res => {
-    return res.data   
-  })
+const getImages = async (pageNum : number, limit : number) : Promise<Image[] | null> => {
+  try {
+    const response = await axios.get(`${baseURL}/photos?_page=${pageNum}&_limit=${limit}`)
+    return response.data
+  }
+  catch (err) {
+    return null
+  } 
 }
 
-const getAlbums = () : Promise<IAlbum[]> => {
-  return axios.get(`${baseURL}/albums`)
-  .then(res => {
-    return res.data   
-  })
+const getAlbums = async () : Promise<IAlbum[] | null> => {
+  try {
+    const response = await axios.get(`${baseURL}/albums`)
+    return response.data
+  }
+  catch (err) {
+    return null
+  } 
 }
 
-const getImagesFromAlbum = (albumId : number) : Promise<Image[]> => {
-  return axios.get(`${baseURL}/albums/${albumId}/photos`)
-  .then(res => {
-    return res.data   
-  })
+const getImagesFromAlbum =  async (albumId : number) : Promise<Image[] | null> => {
+  try {
+    const response = await axios.get(`${baseURL}/albums/${albumId}/photos`)
+    return response.data
+  }
+  catch (err) {
+    return null
+  } 
 }
 
 export const Api = { getImages, getAlbums, getImagesFromAlbum }

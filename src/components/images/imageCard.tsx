@@ -1,17 +1,15 @@
 import * as React from 'react'
 import { RouteComponentProps } from "react-router"
 
-import { Image } from '../../utils/interfaces'
+import store from '../../store/store'
 
-interface IProps {
-  images : Image[]
-}
-
-class ImageCard extends React.Component<RouteComponentProps<any> & IProps> {
+class ImageCard extends React.Component<RouteComponentProps<any>> {
   render() {
-    const {match, images} = this.props
-    const image : Image = 
-      images.find(exactImage => exactImage.id.toString() === match.params.id) || {} as Image
+    const { match } = this.props
+    const imageId = match.params.id
+    const image = store.getSingleImage(imageId)
+
+    console.log(image)
 
     return (
       <div>
