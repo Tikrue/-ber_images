@@ -22,6 +22,7 @@ class AlbumList extends React.Component<{}> {
               <Link
                 to={routes.albums + '/' + album.id}
                 key={album.id}
+                className="albumListItem"
               >
                 <div>{album.title}</div>
               </Link>

@@ -1,0 +1,9 @@
+.albumListItem {
+  color: #000000;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.albumListItem:hover {
+  color: #FF9500;
+}

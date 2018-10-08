@@ -4,14 +4,6 @@ import { uniqBy } from 'lodash'
 import Api from '../utils/api'
 import { Image, IAlbum } from '../utils/interfaces'
 
-const filterDuplicates = (array : Image[]) => {
-  const filteredArray = uniqBy(array, (e) => {
-    return e.id
-  })
-
-  return filteredArray
-}
-
 class Store {
   @observable images : Image[] = []
   @observable albums : IAlbum[] = []
@@ -26,9 +18,28 @@ class Store {
 
   getSingleAlbum = (albumId : string) => {
     const album = 
-      store.albums.find(exactAlbum  => exactAlbum.id.toString() === albumId) || {} as IAlbum
+      this.albums.find(exactAlbum  => exactAlbum.id.toString() === albumId) || {} as IAlbum
 
     return album
+  }
+
+  @action
+  setLoading = (loading : boolean) => {
+    this.isLoading = loading
+  }
+
+  @action
+  setAlbums = (albums : IAlbum[]) => {
+    this.albums = albums
+  }
+
+  @action
+  filterDuplicates = (images : Image[]) => {
+    const filteredImages = uniqBy(images, (e) => {
+      return e.id
+    })
+
+    this.images = filteredImages
   }
 
   @action
@@ -37,7 +48,7 @@ class Store {
 
     if(data != null) {
       const tempImages = [...this.images, data]
-      this.images = filterDuplicates(tempImages)
+      this.filterDuplicates(tempImages)
     }
     else {
       alert('Image cannot be loaded')
@@ -46,19 +57,19 @@ class Store {
 
   @action
   doLoadImages = async (pageNum : number, limit : number = 10) => {
-    this.isLoading = true
+    this.setLoading(true)
     
     const data = await Api.getImages(pageNum, limit)
 
     if(data != null) {
       const tempImages = [...this.images, ...data]
-      this.images = filterDuplicates(tempImages)
+      this.filterDuplicates(tempImages)
     }
     else {
       alert('Images cannot be loaded')
     }
     
-    this.isLoading = false
+    this.setLoading(false)
   }
 
   @action
@@ -66,7 +77,7 @@ class Store {
     const data = await Api.getAlbums()
 
     if(data != null) {
-      this.albums = data
+      this.setAlbums(data)
     }
     else {
       alert('Albums cannot be loaded')
@@ -79,7 +90,7 @@ class Store {
 
     if(data != null) {
       const tempImages = [...this.images, ...data]
-      this.images = filterDuplicates(tempImages)
+      this.filterDuplicates(tempImages)
     }
     else {
       alert('Images cannot be loaded')
