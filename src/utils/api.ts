@@ -24,7 +24,7 @@ const getAlbums = async () : Promise<IAlbum[] | null> => {
   } 
 }
 
-const getImagesFromAlbum =  async (albumId : number) : Promise<Image[] | null> => {
+const getImagesFromAlbum = async (albumId : number) : Promise<Image[] | null> => {
   try {
     const response = await axios.get(`${baseURL}/albums/${albumId}/photos`)
     return response.data
@@ -34,6 +34,21 @@ const getImagesFromAlbum =  async (albumId : number) : Promise<Image[] | null> =
   } 
 }
 
-export const Api = { getImages, getAlbums, getImagesFromAlbum }
+const getSingleImage = async (imageId : number) : Promise<Image | null> => {
+  try {
+    const response = await axios.get(`${baseURL}/photos/${imageId}`)
+    return response.data
+  }
+  catch (err) {
+    return null
+  } 
+}
+
+export const Api = { 
+  getAlbums,
+  getImages,  
+  getImagesFromAlbum, 
+  getSingleImage 
+}
 
 export default Api

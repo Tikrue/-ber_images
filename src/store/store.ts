@@ -32,6 +32,19 @@ class Store {
   }
 
   @action
+  doLoadSingleImage = async (imageId : number) => {
+    const data = await Api.getSingleImage(imageId)
+
+    if(data != null) {
+      const tempImages = [...this.images, data]
+      this.images = filterDuplicates(tempImages)
+    }
+    else {
+      alert('Image cannot be loaded')
+    }
+  }
+
+  @action
   doLoadImages = async (pageNum : number, limit : number = 10) => {
     this.isLoading = true
     
@@ -50,8 +63,6 @@ class Store {
 
   @action
   doLoadAlbums = async () => {
-    this.isLoading = true
-
     const data = await Api.getAlbums()
 
     if(data != null) {
@@ -60,14 +71,10 @@ class Store {
     else {
       alert('Albums cannot be loaded')
     }
-
-    this.isLoading = false
   }
 
   @action
   doLoadImagesPerAlbum = async (albumId : number) => {
-    this.isLoading = true
-
     const data = await Api.getImagesFromAlbum(albumId)
 
     if(data != null) {
@@ -77,8 +84,6 @@ class Store {
     else {
       alert('Images cannot be loaded')
     }
-
-    this.isLoading = false
   }
 }
 
