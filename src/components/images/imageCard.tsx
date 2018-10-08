@@ -4,6 +4,7 @@ import { observer } from 'mobx-react'
 import { isEmpty } from 'lodash'
 
 import store from '../../store/store'
+import LinkButton from '../navigation/linkButton'
 import './images.css'
 
 @observer
@@ -15,9 +16,11 @@ class ImageCard extends React.Component<RouteComponentProps<any>> {
 
   render() {
     const { match } = this.props
+    const { getSingleImage, getSingleAlbum, images } = store
     const imageId = parseInt(match.params.id, 10)
-    const image = store.getSingleImage(imageId)
-    const album = store.getSingleAlbum(image.albumId)
+    const image = getSingleImage(imageId)
+    const album = getSingleAlbum(image.albumId)
+    const index = images.findIndex(x => x.id === imageId)
 
     return (
       <div className="imageCard">
@@ -28,6 +31,13 @@ class ImageCard extends React.Component<RouteComponentProps<any>> {
         <div>
           <p>Title: {image.title}</p>
           {!isEmpty(album) && <p>Album: {album.title}</p>}
+        </div>
+        <div className="btnWrapper">
+          {
+            index > 0 && 
+            <LinkButton imageId={imageId - 1} btnText={'Prev'}/>
+          }
+          <LinkButton imageId={imageId + 1} btnText={'Next'}/>  
         </div>
       </div>
     )

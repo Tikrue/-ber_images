@@ -26,3 +26,17 @@
   padding-bottom: 12px;
   border-bottom: 4px solid #FF9500;
 }
+
+.linkBtn {
+  width: 100px;
+  height: 30px;
+  margin: 1em;
+  background-color: #000000;
+  color: #FFFFFF;
+  border: none;
+}
+
+.linkBtn:hover {
+  cursor: pointer;
+  background-color: #FF9500;
+}

@@ -13,10 +13,6 @@ class ImageList extends React.Component<{}> {
     pageNum: 1,
   }
 
-  componentDidMount() {
-    store.fetchImages(this.state.pageNum)  
-  }
-
   getMoreImages = () => {
     const { pageNum } = this.state
  

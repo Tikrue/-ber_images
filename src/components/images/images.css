@@ -6,3 +6,9 @@
 .imageCard {
   margin: 1em;
 }
+
+.btnWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}

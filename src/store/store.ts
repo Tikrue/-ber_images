@@ -17,6 +17,10 @@ class Store {
   @observable albums : IAlbum[] = []
   @observable isLoading = false
 
+  constructor() {
+    this.fetchImages()
+  }
+
   getSingleImage = (imageId : number) => {
     const image = 
       this.images.find(exactImage => exactImage.id === imageId) || {} as Image
@@ -75,7 +79,7 @@ class Store {
   }
 
   @action
-  fetchImages = async (pageNum : number, limit : number = 10) => {
+  fetchImages = async (pageNum : number = 1, limit : number = 10) => {
     this.setLoading(true)
     
     const data = await Api.getImages(pageNum, limit)
