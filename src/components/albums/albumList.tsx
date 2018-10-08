@@ -9,7 +9,7 @@ import './albums.css'
 @observer
 class AlbumList extends React.Component<{}> {
   componentDidMount() {
-    store.doLoadAlbums()
+    store.fetchAlbums()
   }
 
   render() {

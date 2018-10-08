@@ -4,21 +4,29 @@ import { uniqBy } from 'lodash'
 import Api from '../utils/api'
 import { Image, IAlbum } from '../utils/interfaces'
 
+const filterDuplicatesById = (array : any) => {
+  const filteredArray = uniqBy(array, (e : any) => {
+    return e.id
+  })
+
+  return filteredArray
+}
+
 class Store {
   @observable images : Image[] = []
   @observable albums : IAlbum[] = []
   @observable isLoading = false
 
-  getSingleImage = (imageId : string) => {
+  getSingleImage = (imageId : number) => {
     const image = 
-      this.images.find(exactImage => exactImage.id.toString() === imageId) || {} as Image
+      this.images.find(exactImage => exactImage.id === imageId) || {} as Image
     
     return image
   }
 
-  getSingleAlbum = (albumId : string) => {
+  getSingleAlbum = (albumId : number) => {
     const album = 
-      this.albums.find(exactAlbum  => exactAlbum.id.toString() === albumId) || {} as IAlbum
+      this.albums.find(exactAlbum => exactAlbum.id === albumId) || {} as IAlbum
 
     return album
   }
@@ -34,21 +42,18 @@ class Store {
   }
 
   @action
-  filterDuplicates = (images : Image[]) => {
-    const filteredImages = uniqBy(images, (e) => {
-      return e.id
-    })
-
-    this.images = filteredImages
+  setImages = (images : Image[]) => {
+    this.images = images
   }
 
   @action
-  doLoadSingleImage = async (imageId : number) => {
+  fetchSingleImage = async (imageId : number) => {
     const data = await Api.getSingleImage(imageId)
 
     if(data != null) {
       const tempImages = [...this.images, data]
-      this.filterDuplicates(tempImages)
+      this.setImages(filterDuplicatesById(tempImages))
+      this.fetchSingleAlbum(data.albumId)
     }
     else {
       alert('Image cannot be loaded')
@@ -56,14 +61,28 @@ class Store {
   }
 
   @action
-  doLoadImages = async (pageNum : number, limit : number = 10) => {
+  fetchSingleAlbum = async (albumId : number) => {
+    const data = await Api.getSingleAlbum(albumId)
+
+    if(data != null) {
+      const tempAlbums = [...this.albums, data]
+      this.setAlbums(filterDuplicatesById(tempAlbums))
+      this.fetchImagesPerAlbum(data.id)
+    }
+    else {
+      alert('Image cannot be loaded')
+    }
+  }
+
+  @action
+  fetchImages = async (pageNum : number, limit : number = 10) => {
     this.setLoading(true)
     
     const data = await Api.getImages(pageNum, limit)
 
     if(data != null) {
       const tempImages = [...this.images, ...data]
-      this.filterDuplicates(tempImages)
+      this.setImages(filterDuplicatesById(tempImages))
     }
     else {
       alert('Images cannot be loaded')
@@ -73,7 +92,7 @@ class Store {
   }
 
   @action
-  doLoadAlbums = async () => {
+  fetchAlbums = async () => {
     const data = await Api.getAlbums()
 
     if(data != null) {
@@ -85,12 +104,12 @@ class Store {
   }
 
   @action
-  doLoadImagesPerAlbum = async (albumId : number) => {
+  fetchImagesPerAlbum = async (albumId : number) => {
     const data = await Api.getImagesFromAlbum(albumId)
 
     if(data != null) {
       const tempImages = [...this.images, ...data]
-      this.filterDuplicates(tempImages)
+      this.setImages(filterDuplicatesById(tempImages))
     }
     else {
       alert('Images cannot be loaded')

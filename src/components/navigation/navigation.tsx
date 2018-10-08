@@ -3,7 +3,11 @@ import { NavLink } from 'react-router-dom'
 
 import './navigation.css'
 
-const Navigation = ({ routes } : any) => {
+interface INavigationProps {
+  routes : any
+}
+
+const Navigation : React.SFC<INavigationProps> = ({ routes }) => {
   return (
     <ul className="navList">
       <li className="navItem">

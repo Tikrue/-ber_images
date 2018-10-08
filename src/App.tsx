@@ -7,7 +7,7 @@ import Albums from './components/albums/albums'
 import Navigation from './components/navigation/navigation'
 import { routes } from './utils/constants'
 
-class App extends React.Component {
+class App extends React.Component<{}> {
   render() {
     return (
       <div className="App">

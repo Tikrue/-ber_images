@@ -11,7 +11,7 @@ import '../images/images.css'
 @observer
 class SingleAlbum extends React.Component<RouteComponentProps<any>> {
   componentDidMount() {
-    store.doLoadImagesPerAlbum(this.props.match.params.id)
+    store.fetchSingleAlbum(this.props.match.params.id)
   }
 
   filterImages = (images : Image[], albumId : string) => {
@@ -20,7 +20,7 @@ class SingleAlbum extends React.Component<RouteComponentProps<any>> {
 
   render() {
     const { match } = this.props
-    const albumId = match.params.id
+    const albumId = parseInt(match.params.id, 10)
     const albumImages = this.filterImages(store.images, match.params.id)
     const album : IAlbum = store.getSingleAlbum(albumId)
   

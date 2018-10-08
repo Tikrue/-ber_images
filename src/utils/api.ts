@@ -44,10 +44,21 @@ const getSingleImage = async (imageId : number) : Promise<Image | null> => {
   } 
 }
 
+const getSingleAlbum = async (albumId : number) : Promise<IAlbum | null> => {
+  try {
+    const response = await axios.get(`${baseURL}/albums/${albumId}`)
+    return response.data
+  }
+  catch (err) {
+    return null
+  } 
+}
+
 export const Api = { 
   getAlbums,
   getImages,  
-  getImagesFromAlbum, 
+  getImagesFromAlbum,
+  getSingleAlbum, 
   getSingleImage 
 }
 
