@@ -10,8 +10,9 @@ test('that setLoading sets right value', () => {
   expect(store.isLoading).toBe(true)
 })
 
-test('that fetchImages updates store.images', () => {
+test('that fetchImages updates store.images', (done) => {
   store.fetchImages().then(res => {
-    expect(store.images).toBe(res)
+    expect(store.images).toHaveLength(10)
+    done()
   })
 })

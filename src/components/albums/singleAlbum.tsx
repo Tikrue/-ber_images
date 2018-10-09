@@ -33,22 +33,21 @@ class SingleAlbum extends React.Component<RouteComponentProps<any>> {
             {
               albumImages.map(image => 
                 <Link
-                to={routes.images + '/' + image.id}
-                key={image.id}
-              >
-                <img 
-                  className="imageCard" 
-                  src={image.thumbnailUrl}
-                  alt={image.title} 
-                />
-              </Link>
+                  to={routes.images + '/' + image.id}
+                  key={image.id}
+                >
+                  <img 
+                    className="imageCard" 
+                    src={image.thumbnailUrl}
+                    alt={image.title} 
+                  />
+                </Link>
               )
             }
           </div>
           :
           <div className="loader" />
-        }
-          
+        }   
       </div>
     )
   }
