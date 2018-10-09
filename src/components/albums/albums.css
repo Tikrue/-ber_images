@@ -7,3 +7,22 @@
 .albumListItem:hover {
   color: #FF9500;
 }
+
+.albumTableWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.albumListWrapper {
+  margin: 0 15% 0 15%;
+}
+
+.albumHeaderRow {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.albumRow, .albumHeaderRow {
+  text-align: left;
+}

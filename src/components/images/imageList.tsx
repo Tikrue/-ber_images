@@ -41,7 +41,10 @@ class ImageList extends React.Component<{}> {
           </div>
           {
             !store.isLoading
-            ? <Waypoint bottomOffset = '-500px' onEnter={this.getMoreImages} />
+            ? <Waypoint 
+                bottomOffset = '-500px' 
+                onEnter={this.getMoreImages}
+              />
             : <div style={{fontWeight: 'bold', fontSize: 2+'em'}}>Loading...</div> 
           }
       </div>

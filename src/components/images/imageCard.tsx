@@ -28,7 +28,7 @@ class ImageCard extends React.Component<RouteComponentProps<any>> {
           src={image.url}
           alt={image.title} 
         />
-        <div>
+        <div className="imageCardDetails">
           <p>Title: {image.title}</p>
           {!isEmpty(album) && <p>Album: {album.title}</p>}
         </div>
