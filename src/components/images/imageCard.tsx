@@ -5,7 +5,6 @@ import { isEmpty } from 'lodash'
 
 import store from '../../store/store'
 import LinkButton from '../navigation/linkButton'
-import './images.css'
 
 @observer
 class ImageCard extends React.Component<RouteComponentProps<any>> {

@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 import { routes } from '../../utils/constants'
 import ImageList from './imageList'
 import ImageCard from './imageCard'
+import './images.css'
 
 const Images : React.SFC<{}> = () => {
   return (

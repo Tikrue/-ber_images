@@ -5,7 +5,6 @@ import Waypoint from 'react-waypoint'
 
 import { routes } from '../../utils/constants'
 import store from '../../store/store'
-import './images.css'
 
 @observer
 class ImageList extends React.Component<{}> {
@@ -45,7 +44,7 @@ class ImageList extends React.Component<{}> {
                 bottomOffset = '-500px' 
                 onEnter={this.getMoreImages}
               />
-            : <div style={{fontWeight: 'bold', fontSize: 2+'em'}}>Loading...</div> 
+            : <div className="loader" /> 
           }
       </div>
     )

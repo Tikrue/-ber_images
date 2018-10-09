@@ -52,6 +52,7 @@ class Store {
 
   @action
   fetchSingleImage = async (imageId : number) => {
+    this.setLoading(true)
     const data = await Api.getSingleImage(imageId)
 
     if(data != null) {
@@ -62,6 +63,7 @@ class Store {
     else {
       alert('Image cannot be loaded')
     }
+    this.setLoading(false)
   }
 
   @action
@@ -80,8 +82,7 @@ class Store {
 
   @action
   fetchImages = async (pageNum : number = 1, limit : number = 10) => {
-    this.setLoading(true)
-    
+    this.setLoading(true)  
     const data = await Api.getImages(pageNum, limit)
 
     if(data != null) {
@@ -91,12 +92,12 @@ class Store {
     else {
       alert('Images cannot be loaded')
     }
-    
     this.setLoading(false)
   }
 
   @action
   fetchAlbums = async () => {
+    this.setLoading(true)
     const data = await Api.getAlbums()
 
     if(data != null) {
@@ -105,10 +106,12 @@ class Store {
     else {
       alert('Albums cannot be loaded')
     }
+    this.setLoading(false)
   }
 
   @action
   fetchImagesPerAlbum = async (albumId : number) => {
+    this.setLoading(true)
     const data = await Api.getImagesFromAlbum(albumId)
 
     if(data != null) {
@@ -118,9 +121,8 @@ class Store {
     else {
       alert('Images cannot be loaded')
     }
+    this.setLoading(false)
   }
 }
 
-const store = new Store()
-
-export default store
+export default new Store()

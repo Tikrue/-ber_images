@@ -26,23 +26,31 @@ class SingleAlbum extends React.Component<RouteComponentProps<any>> {
   
     return (
       <div>
-        <h1>{album.title}</h1>
-        <div className="imageListWrapper">
-          {
-            albumImages.map(image => 
-              <Link
-              to={routes.images + '/' + image.id}
-              key={image.id}
-            >
-              <img 
-                className="imageCard" 
-                src={image.thumbnailUrl}
-                alt={image.title} 
-              />
-            </Link>
-            )
-          }
-        </div>  
+        {
+          !store.isLoading ?
+          <div> 
+            <h1>{album.title}</h1>
+            <div className="imageListWrapper">
+              {
+                albumImages.map(image => 
+                  <Link
+                  to={routes.images + '/' + image.id}
+                  key={image.id}
+                >
+                  <img 
+                    className="imageCard" 
+                    src={image.thumbnailUrl}
+                    alt={image.title} 
+                  />
+                </Link>
+                )
+              }
+            </div>
+          </div>
+          :
+          <div className="loader" />
+        }
+          
       </div>
     )
   }
