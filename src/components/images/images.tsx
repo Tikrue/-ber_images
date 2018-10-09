@@ -8,19 +8,17 @@ import './images.css'
 
 const Images : React.SFC<{}> = () => {
   return (
-    <div>  
-      <div>
-        <Switch>
-          <Route 
-            exact path={routes.images + '/:id'} 
-            component={ImageCard}
-          />
-          <Route 
-            exact path={routes.images} 
-            component={ImageList} 
-          />
-        </Switch>
-      </div>   
+    <div> 
+      <Switch>
+        <Route 
+          exact path={routes.images + '/:id'} 
+          component={ImageCard}
+        />
+        <Route 
+          exact path={routes.images} 
+          component={ImageList} 
+        />
+      </Switch>   
     </div>
   )
 }
