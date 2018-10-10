@@ -53,44 +53,43 @@ class Store {
   @action
   fetchSingleImage = async (imageId : number) => {
     this.setLoading(true)
-    const data = await Api.getSingleImage(imageId)
 
-    if(data != null) {
+    try {
+      const data = await Api.getSingleImage(imageId)
       const tempImages = [...this.images, data]
       this.setImages(filterDuplicatesById(tempImages))
       this.fetchSingleAlbum(data.albumId)
     }
-    else {
-      alert('Image cannot be loaded')
+    catch(err) {
+      alert(err)
     }
     this.setLoading(false)
   }
 
   @action
   fetchSingleAlbum = async (albumId : number) => {
-    const data = await Api.getSingleAlbum(albumId)
-
-    if(data != null) {
+    try {
+      const data = await Api.getSingleAlbum(albumId)
       const tempAlbums = [...this.albums, data]
       this.setAlbums(filterDuplicatesById(tempAlbums))
       this.fetchImagesPerAlbum(data.id)
     }
-    else {
-      alert('Image cannot be loaded')
+    catch(err) {
+      alert(err)
     }
   }
 
   @action
   fetchImages = async (pageNum : number = 1, limit : number = 10) => {
     this.setLoading(true)  
-    const data = await Api.getImages(pageNum, limit)
 
-    if(data != null) {
+    try {
+      const data = await Api.getImages(pageNum, limit)    
       const tempImages = [...this.images, ...data]
-      this.setImages(filterDuplicatesById(tempImages))
+      this.setImages(filterDuplicatesById(tempImages))      
     }
-    else {
-      alert('Images cannot be loaded')
+    catch(err) {
+      alert(err)
     }
     this.setLoading(false)
   }
@@ -98,13 +97,13 @@ class Store {
   @action
   fetchAlbums = async () => {
     this.setLoading(true)
-    const data = await Api.getAlbums()
 
-    if(data != null) {
+    try {
+      const data = await Api.getAlbums()
       this.setAlbums(data)
     }
-    else {
-      alert('Albums cannot be loaded')
+    catch(err) {
+      alert(err)
     }
     this.setLoading(false)
   }
@@ -112,14 +111,14 @@ class Store {
   @action
   fetchImagesPerAlbum = async (albumId : number) => {
     this.setLoading(true)
-    const data = await Api.getImagesFromAlbum(albumId)
-
-    if(data != null) {
+    
+    try {
+      const data = await Api.getImagesFromAlbum(albumId)    
       const tempImages = [...this.images, ...data]
-      this.setImages(filterDuplicatesById(tempImages))
+      this.setImages(filterDuplicatesById(tempImages))      
     }
-    else {
-      alert('Images cannot be loaded')
+    catch(err) {
+      alert(err)
     }
     this.setLoading(false)
   }
